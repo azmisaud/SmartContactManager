@@ -1,11 +1,22 @@
 package com.scm.scmv1.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.scm.scmv1.entities.User;
+import com.scm.scmv1.forms.UserForm;
+import com.scm.scmv1.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/home")
     public String home(Model model){
@@ -40,7 +51,31 @@ public class PageController {
     }
 
     @GetMapping("/register")
-    public String registerPage(){
+    public String registerPage(Model model){
+        UserForm userForm=new UserForm();
+        model.addAttribute("userForm", userForm);
         return "register";
+    }
+
+    //Processing registartion
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processRegister(@ModelAttribute UserForm userForm) {
+        // Fetching form data
+        // Validating form data
+        // Saving data to database
+        User user=User.builder()
+                    .name(userForm.getName())
+                    .email(userForm.getEmail())
+                    .password(userForm.getEmail())
+                    .about(userForm.getAbout())
+                    .phoneNumber(userForm.getPhoneNumber())
+                    .profilePic("https://avatars.githubusercontent.com/u/157240150?v=4")
+                    .build();
+
+        User savedUser=userService.saveUser(user);
+        // message = "Registration successfull"
+        // redirecting to login page
+        System.out.println("user saved");
+        return "redirect:/register";
     }
 }
