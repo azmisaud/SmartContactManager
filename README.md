@@ -1,7 +1,14 @@
 # Smart Contact Manager
 
+<<<<<<< HEAD
 A modern web application for managing contacts efficiently in the cloud. This project is currently under development.
 > **Learning Journey**: This project was created as part of my Spring Boot learning journey. Special thanks to [Learn Code with Durgesh](https://www.youtube.com/@LearnCodeWithDurgesh) for their excellent tutorials and guidance in Spring Boot development.
+=======
+> A cloud-based contact management system built with Spring Boot and Thymeleaf. Store, organize, and manage your contacts efficiently with a modern, responsive interface.
+
+A modern web application for managing contacts efficiently in the cloud. This project is currently under development.
+
+>>>>>>> b1c8950 (Add local README.md)
 ## Tech Stack
 
 ### Backend
@@ -57,3 +64,15 @@ npm run dev
 - `src/main/resources` - Configuration files and static resources
 - `src/main/resources/static` - Frontend assets
 - `src/test` - Test files
+<<<<<<< HEAD
+=======
+
+## Contributing
+This project is under active development. Feel free to contribute by:
+1. Forking the repository
+2. Creating a feature branch
+3. Submitting a pull request
+
+## License
+ISC License 
+>>>>>>> b1c8950 (Add local README.md)
