@@ -6,9 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.scm.scmv1.entities.Providers;
 import com.scm.scmv1.entities.User;
 import com.scm.scmv1.forms.UserForm;
+import com.scm.scmv1.helpers.Message;
+import com.scm.scmv1.helpers.MessageType;
 import com.scm.scmv1.services.UserService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -59,23 +65,32 @@ public class PageController {
 
     //Processing registartion
     @RequestMapping(value = "/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm) {
+    public String processRegister(@ModelAttribute UserForm userForm,HttpSession session) {
         // Fetching form data
         // Validating form data
         // Saving data to database
-        User user=User.builder()
-                    .name(userForm.getName())
-                    .email(userForm.getEmail())
-                    .password(userForm.getEmail())
-                    .about(userForm.getAbout())
-                    .phoneNumber(userForm.getPhoneNumber())
-                    .profilePic("https://avatars.githubusercontent.com/u/157240150?v=4")
-                    .build();
+        // User user=User.builder()
+        //             .name(userForm.getName())
+        //             .email(userForm.getEmail())
+        //             .password(userForm.getPassword())
+        //             .about(userForm.getAbout())
+        //             .phoneNumber(userForm.getPhoneNumber())
+        //             .profilePic("https://avatars.githubusercontent.com/u/157240150?v=4")
+        //             .build();
+
+        User user=new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("https://avatars.githubusercontent.com/u/157240150?v=4");
+        user.setProvider(Providers.SELF);
 
         User savedUser=userService.saveUser(user);
-        // message = "Registration successfull"
-        // redirecting to login page
-        System.out.println("user saved");
+        Message message=Message.builder().content("Registration Successfull").type(MessageType.green).build();
+        session.setAttribute("message", message);
+        System.out.println(savedUser);
         return "redirect:/register";
     }
 }
